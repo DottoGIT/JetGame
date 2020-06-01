@@ -12,14 +12,55 @@ public abstract class AbstractJetpack : MonoBehaviour, IControllable
 {
     [Header("Basic Configuration")]
     [Space]
-    [SerializeField] protected List<AbstractTail> tails;
+    [SerializeField] public List<AbstractTail> tails;
     [Header("Movement Settings")]
     [Space]
     [SerializeField] public MovementType movementType;
-    [SerializeField] public float Velocity;
+    [Header("Statistics")]
+    [Space]
+
+    [Range(1f, 10f)]
+    [SerializeField] public int StatVelocity=1;
+    public int ActualVelocity
+    {
+        get
+        {
+            return StatVelocity * 300;
+        }
+    }
+
+    [Range(1f, 10f)]
+    [SerializeField] public int StatHealthPoints=1;
+    public int ActualHealthPoints
+    {
+        get
+        {
+            return StatHealthPoints * 10;
+        }
+    }
+
+    [Range(1f, 10f)]
+    [SerializeField] public int Armor=1;
+
+    [Range(1f, 10f)]
+    [SerializeField] public int StatFuelConsumption=1;
+    public float ActualFuelConsumption
+    {
+        get
+        {
+            return StatFuelConsumption * 0.03f;
+        }
+    }
+
+
 
     [HideInInspector] public Rigidbody2D myRigid = new Rigidbody2D();
     protected AbstractMovement movement;
+
+    private void Awake()
+    {
+        GameInfo.ActualJetPack = this;
+    }
 
     protected virtual void Start()
     {
@@ -58,11 +99,11 @@ public abstract class AbstractJetpack : MonoBehaviour, IControllable
         }
     }
 
-
+    
 
     private void UpdateRotation()
     {
-        if (PlayerInput.GetLeftStick() != Vector2.zero && Mathf.Abs(PlayerInput.GetLeftStick().x) > 0.2f || Mathf.Abs(PlayerInput.GetLeftStick().y) > 0.2f)
+        if (Mathf.Abs(PlayerInput.GetLeftStick().x) > 0.2f || Mathf.Abs(PlayerInput.GetLeftStick().y) > 0.2f)
         {
 
             float rotationZ = Mathf.Atan2(PlayerInput.GetLeftStick().y, PlayerInput.GetLeftStick().x) * Mathf.Rad2Deg;
@@ -70,6 +111,7 @@ public abstract class AbstractJetpack : MonoBehaviour, IControllable
             transform.rotation = Quaternion.Euler(0f, 0f, rotationZ - 90);
 
         }
+        
     }
     
     public void OnBPerformed()
@@ -83,37 +125,22 @@ public abstract class AbstractJetpack : MonoBehaviour, IControllable
 
     public void OnAPerformed()
     {
-        StartTails();
         StartEngine();
     }
     public void OnACancelled()
     {
-        StopTails();
         StopEngine();
     }
 
 
     private void StartEngine()
     {
-        movement.Move();
+        movement.SendCommandToMove();
     }
     private void StopEngine()
     {
-        return;
+        movement.StopMoving();
     }
 
-    private void StartTails()
-    {
-        foreach(var tail in tails)
-        {
-            tail.isEngineOn = true;
-        }
-    }
-    private void StopTails()
-    {
-        foreach (var tail in tails)
-        {
-            tail.isEngineOn = false;
-        }
-    }
+
 }

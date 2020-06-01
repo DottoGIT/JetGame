@@ -13,13 +13,43 @@ public abstract class AbstractMovement
         myJet = _jet;
     }
 
-    public virtual void Move()
+    public virtual void SendCommandToMove()
     {
-        return;
+        if(FuelScript.HasFuelLeft(myJet) == true)
+        {
+            Move();
+        }
+        else
+        {
+            StopMoving();
+        }
+    }
+
+
+
+    protected virtual void Move()
+    {
+        StartTails();
     }
     public virtual void StopMoving()
     {
-        return;
+        StopTails();
     }
+
+    private void StartTails()
+    {
+        foreach (var tail in myJet.tails)
+        {
+            tail.isEngineOn = true;
+        }
+    }
+    private void StopTails()
+    {
+        foreach (var tail in myJet.tails)
+        {
+            tail.isEngineOn = false;
+        }
+    }
+
 
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
+    [SerializeField] private bool SnapMode;
     private static Vector2 leftVector;
     private static Vector2 rightVector;
     private bool isAPerformed = false;
@@ -36,6 +37,18 @@ public class PlayerInput : MonoBehaviour
         if (isBPerformed)
         {
             OnBPerformed();
+        }
+
+        if (SnapMode)
+        {
+            if(Mathf.Abs(GetLeftStick().x) > 0.7f || Mathf.Abs(GetLeftStick().y) > 0.7f)
+            {
+                OnAPressed();
+            }
+            else
+            {
+                OnACancelled();
+            }
         }
     }
 
