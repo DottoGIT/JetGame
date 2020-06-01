@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\Input\PlayerInput.cs" />
     <Compile Include="Assets\Scripts\Interfaces\ICollectable.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IControllable.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IDamageable.cs" />
     <Compile Include="Assets\Scripts\JetPacks\AbstractJetpack.cs" />
     <Compile Include="Assets\Scripts\JetPacks\BasicJetpack.cs" />
     <Compile Include="Assets\Scripts\Managers\CollectableManager.cs" />
@@ -75,7 +76,8 @@
     <Compile Include="Assets\Scripts\Movement\BasicMovement.cs" />
     <Compile Include="Assets\Scripts\Tails\AbstractTail.cs" />
     <Compile Include="Assets\Scripts\Tails\ConstantTail.cs" />
-    <Compile Include="Assets\Scripts\UI\FuelScript.cs" />
+    <Compile Include="Assets\Scripts\UI\UIFuelScript.cs" />
+    <Compile Include="Assets\Scripts\UI\UIHealthScript.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Maciej/Desktop/JetGame/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

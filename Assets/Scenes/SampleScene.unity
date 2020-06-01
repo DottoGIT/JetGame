@@ -1066,10 +1066,12 @@ MonoBehaviour:
   - {fileID: 1746473626}
   - {fileID: 1766290870}
   movementType: 0
-  StatVelocity: 10
+  StatVelocity: 5
   StatHealthPoints: 1
   Armor: 1
-  StatFuelConsumption: 10
+  StatFuelConsumption: 1
+  ActualFuelLevel: 0
+  ActualHealthLevel: 0
   myRigid: {fileID: 0}
 --- !u!1 &1055650085
 GameObject:
@@ -1080,6 +1082,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1055650086}
+  - component: {fileID: 1055650089}
   - component: {fileID: 1055650088}
   - component: {fileID: 1055650087}
   m_Layer: 0
@@ -1141,6 +1144,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1055650085}
   m_CullTransparentMesh: 0
+--- !u!114 &1055650089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055650085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81f0e59f07769e64183ab03598c89a4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1253630066
 PrefabInstance:
   m_ObjectHideFlags: 0

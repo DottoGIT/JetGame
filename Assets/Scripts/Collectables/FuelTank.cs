@@ -6,9 +6,11 @@ public class FuelTank : MonoBehaviour , ICollectable
 {
     public float FuelAdded;
 
+    private AbstractJetpack Taker;
+
     public void Collect()
     {
-        FuelScript.ActualFuelLevel += FuelAdded;
+        Taker.ActualFuelLevel += FuelAdded;
         Destruct();
     }
 
@@ -24,8 +26,9 @@ public class FuelTank : MonoBehaviour , ICollectable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.GetComponent<AbstractJetpack>() != null)
         {
+            Taker = collision.GetComponent<AbstractJetpack>();
             Collect();
         }
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    [SerializeField] private bool SnapMode;
+    [SerializeField] private bool SnapMode = false;
     private static Vector2 leftVector;
     private static Vector2 rightVector;
     private bool isAPerformed = false;

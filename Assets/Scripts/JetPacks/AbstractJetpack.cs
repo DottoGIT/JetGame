@@ -8,7 +8,7 @@ public enum MovementType
     NonExistingMovement
 }
 
-public abstract class AbstractJetpack : MonoBehaviour, IControllable
+public abstract class AbstractJetpack : MonoBehaviour, IControllable, IDamageable
 {
     [Header("Basic Configuration")]
     [Space]
@@ -20,7 +20,7 @@ public abstract class AbstractJetpack : MonoBehaviour, IControllable
     [Space]
 
     [Range(1f, 10f)]
-    [SerializeField] public int StatVelocity=1;
+    [SerializeField] public int StatVelocity = 1;
     public int ActualVelocity
     {
         get
@@ -30,7 +30,7 @@ public abstract class AbstractJetpack : MonoBehaviour, IControllable
     }
 
     [Range(1f, 10f)]
-    [SerializeField] public int StatHealthPoints=1;
+    [SerializeField] public int StatHealthPoints = 1;
     public int ActualHealthPoints
     {
         get
@@ -40,10 +40,10 @@ public abstract class AbstractJetpack : MonoBehaviour, IControllable
     }
 
     [Range(1f, 10f)]
-    [SerializeField] public int Armor=1;
+    [SerializeField] public int Armor = 1;
 
     [Range(1f, 10f)]
-    [SerializeField] public int StatFuelConsumption=1;
+    [SerializeField] public int StatFuelConsumption = 1;
     public float ActualFuelConsumption
     {
         get
@@ -53,9 +53,16 @@ public abstract class AbstractJetpack : MonoBehaviour, IControllable
     }
 
 
+    public readonly float MaxFuelLevel = 100;
+    public float ActualFuelLevel;
+    public readonly float MaxHealthLevel = 100;
+    public float ActualHealthLevel;
+
 
     [HideInInspector] public Rigidbody2D myRigid = new Rigidbody2D();
     protected AbstractMovement movement;
+
+    //MonoBehav Stuff
 
     private void Awake()
     {
@@ -64,15 +71,20 @@ public abstract class AbstractJetpack : MonoBehaviour, IControllable
 
     protected virtual void Start()
     {
+        ActualFuelLevel = MaxFuelLevel;
+        ActualHealthLevel = MaxHealthLevel;
         myRigid = GetComponent<Rigidbody2D>();
         PlayerInput.AddToControllables(this);
         UpdateMovement();
     }
 
-    protected virtual void FixedUpdate()
+    private void Update()
     {
         UpdateRotation();
+        FuelCheck();
+        HealthCheck();
     }
+    //Assigns
 
     public void AssignMovement(AbstractMovement _movement)
     {
@@ -99,7 +111,59 @@ public abstract class AbstractJetpack : MonoBehaviour, IControllable
         }
     }
 
-    
+    //Fuel Stuff
+
+    private void FuelCheck()
+    {
+        if (ActualFuelLevel > 100)
+        {
+            ActualFuelLevel = 100;
+        }
+        else if (ActualFuelLevel < 0)
+        {
+            ActualFuelLevel = 0;
+        }
+    }
+    public void ConsumeFuel(float value)
+    {
+        ActualFuelLevel -= value;
+    }
+    public bool HasFuelLeft()
+    {
+        if (ActualFuelLevel > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    //Health Stuff
+
+    private void HealthCheck()
+    {
+        if (ActualHealthLevel > 100)
+        {
+            ActualHealthLevel = 100;
+        }
+        else if (ActualHealthLevel < 0)
+        {
+            ActualHealthLevel = 0;
+            Destroy();
+        }
+    }
+    public void TakeDamage(float value)
+    {
+        ActualHealthLevel -= value;
+    }
+    public void Destroy()
+    {
+        Destroy(gameObject);
+    }
+
+    //Rotation Stuff
 
     private void UpdateRotation()
     {
@@ -114,6 +178,8 @@ public abstract class AbstractJetpack : MonoBehaviour, IControllable
         
     }
     
+    //Controlls Stuff
+
     public void OnBPerformed()
     {
         return;
@@ -132,6 +198,7 @@ public abstract class AbstractJetpack : MonoBehaviour, IControllable
         StopEngine();
     }
 
+    //Movement Stuff
 
     private void StartEngine()
     {
@@ -141,6 +208,5 @@ public abstract class AbstractJetpack : MonoBehaviour, IControllable
     {
         movement.StopMoving();
     }
-
 
 }

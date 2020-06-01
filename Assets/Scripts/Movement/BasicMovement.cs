@@ -16,12 +16,12 @@ public class BasicMovement : AbstractMovement
         {
             myJet.myRigid.AddForce(PlayerInput.GetLeftStick().normalized * myJet.ActualVelocity * Time.deltaTime);
             oldPos = PlayerInput.GetLeftStick().normalized;
-            FuelScript.ConsumeFuel(myJet.ActualFuelConsumption);
+            myJet.ConsumeFuel(myJet.ActualFuelConsumption);
         }
         else
         {
             myJet.myRigid.AddForce(oldPos * myJet.ActualVelocity * Time.deltaTime);
-            FuelScript.ConsumeFuel(myJet.ActualFuelConsumption);
+            myJet.ConsumeFuel(myJet.ActualFuelConsumption);
 
         }
 

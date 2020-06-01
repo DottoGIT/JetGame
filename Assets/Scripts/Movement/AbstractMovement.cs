@@ -15,7 +15,7 @@ public abstract class AbstractMovement
 
     public virtual void SendCommandToMove()
     {
-        if(FuelScript.HasFuelLeft(myJet) == true)
+        if(myJet.HasFuelLeft() == true)
         {
             Move();
         }
