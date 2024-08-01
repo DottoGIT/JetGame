@@ -1,6 +1,6 @@
 # JetGame
 ## Jetpack controls with joystick
-A scene in **Unity** that implements jetpack physics you can controll with any controller.
+A Unity scene that implements jetpack physics, which can be controlled with any controller.
 ## Source folder
 Most of the code is stored in [Scripts](Assets/Scripts) folder
 ## Screenshots
